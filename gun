@@ -1,0 +1,23 @@
+local deathSound = Instance.new("Sound")
+deathSound.SoundId = "rbxassetid://5686379468"
+deathSound.Parent = game.Workspace
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local function playDeathSound(character)
+    local humanoid = character:WaitForChild("Humanoid")
+
+    humanoid.Died:Connect(function()
+
+        if deathSound.IsPlaying then
+            deathSound:Stop()
+        end
+
+        deathSound:Play()
+    end)
+end
+
+playDeathSound(player.Character or player.CharacterAdded:Wait())
+
+player.CharacterAdded:Connect(playDeathSound)
