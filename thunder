@@ -1,28 +1,23 @@
--- rbxassetid://157878578は死亡音のアセットIDです
 local deathSound = Instance.new("Sound")
 deathSound.SoundId = "rbxassetid://157878578"
 deathSound.Parent = game.Workspace
 
--- プレイヤーが死亡したときに発生するイベントを取得します
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 local function playDeathSound(character)
     local humanoid = character:WaitForChild("Humanoid")
 
-    -- 死亡時に死亡音を再生します
     humanoid.Died:Connect(function()
-        -- 死亡音が再生中であれば停止します
+
         if deathSound.IsPlaying then
             deathSound:Stop()
         end
-        -- 死亡音を再生します
+
         deathSound:Play()
     end)
 end
 
--- 現在のキャラクターに対して関数を実行します
 playDeathSound(player.Character or player.CharacterAdded:Wait())
 
--- 新しいキャラクターがスポーンしたときに関数を実行します
 player.CharacterAdded:Connect(playDeathSound)
